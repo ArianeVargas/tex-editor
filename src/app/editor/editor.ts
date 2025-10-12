@@ -14,6 +14,17 @@ export class EditorComponent implements OnInit {
   contenidoHtml = '';
   previewHtml: string | null = null;
 
+  modules: any = {
+    syntax: true,
+    toolbar: [
+      ['bold', 'italic', 'underline', 'strike'],
+      [{ list: 'ordered' }, { list: 'bullet' }],
+      ['blockquote', 'code-block'],
+      ['link', 'image'],
+      ['clean'],
+    ],
+  };
+
   constructor(private contenidoService: ContenidoService) {}
 
   ngOnInit() {

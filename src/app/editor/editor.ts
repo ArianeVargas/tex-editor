@@ -14,17 +14,6 @@ export class EditorComponent implements OnInit {
   contenidoHtml = '';
   previewHtml: string | null = null;
 
-  modules: any = {
-    syntax: true,
-    toolbar: [
-      ['bold', 'italic', 'underline', 'strike'],
-      [{ list: 'ordered' }, { list: 'bullet' }],
-      ['blockquote', 'code-block'],
-      ['link', 'image'],
-      ['clean'],
-    ],
-  };
-
   constructor(private contenidoService: ContenidoService) {}
 
   ngOnInit() {
@@ -35,13 +24,18 @@ export class EditorComponent implements OnInit {
   }
 
   guardarContenido() {
-    if (!this.contenidoHtml.trim()) {
+    const contenidoLimpio = this.contenidoHtml.replace(/<p><br><\/p>/g, '').trim();
+    if (!contenidoLimpio) {
       alert('⚠️ No hay contenido para guardar.');
       return;
     }
 
     this.contenidoService.guardarContenido({ html: this.contenidoHtml }).subscribe({
-      next: () => alert('✅ Contenido guardado en la base de datos'),
+      next: () => {        
+        alert('✅ Contenido guardado en la base de datos');
+        this.contenidoService.notificarCambio();
+      },
+    
       error: (err) => console.error('❌ Error al guardar contenido:', err),
     });
   }

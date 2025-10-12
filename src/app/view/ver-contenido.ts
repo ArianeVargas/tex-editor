@@ -17,6 +17,9 @@ export class VerContenidoComponent implements OnInit {
 
   ngOnInit() {
     this.cargarContenidos();
+    this.contenidoService.cambios$.subscribe(() => {
+      this.cargarContenidos();
+    });
   }
 
   cargarContenidos() {

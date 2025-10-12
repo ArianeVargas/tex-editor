@@ -14,6 +14,14 @@ export class EditorComponent implements OnInit {
   contenidoHtml = '';
   previewHtml: string | null = null;
 
+  modules = {
+    toolbar: [
+      ['bold', 'italic'],           // Negrita y Cursiva
+      ['link'],                     // Insertar hipervínculo
+      [{ list: 'ordered' }, { list: 'bullet' }], // Listas ordenadas y no ordenadas
+    ]
+  };
+
   constructor(private contenidoService: ContenidoService) {}
 
   ngOnInit() {

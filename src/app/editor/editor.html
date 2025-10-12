@@ -3,6 +3,7 @@
 
   <quill-editor
     [(ngModel)]="contenidoHtml"
+    [modules]="modules"
     theme="snow"
     (onContentChanged)="onContentChanged($event)"
     class="w-full h-80"

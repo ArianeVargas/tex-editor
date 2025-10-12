@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class ContenidoService {
-  private apiUrl = 'http://localhost:3000/api/contenido';
+  private apiUrl = 'https://backend-editor-5auy.onrender.com/api/contenido';
 
   constructor(private http: HttpClient) {}
 

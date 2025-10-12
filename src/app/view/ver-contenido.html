@@ -1,0 +1,62 @@
+<div class="max-w-5xl mx-auto mt-10 bg-white p-6 rounded-2xl shadow ring-1 ring-slate-100">
+  <h2 class="text-2xl font-semibold mb-4 text-center">📄 Contenidos Guardados</h2>
+
+  <table class="min-w-full border border-slate-200 rounded-lg overflow-hidden">
+    <thead class="bg-slate-100 text-slate-600 text-sm uppercase">
+      <tr>
+        <th class="py-2 px-4 text-left">#</th>
+        <th class="py-2 px-4 text-left">Contenido</th>
+        <th class="py-2 px-4 text-left">Fecha</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="let item of contenidosPaginados; let i = index"
+        class="border-t hover:bg-slate-50"
+      >
+        <td class="py-2 px-4">{{ (paginaActual - 1) * itemsPorPagina + i + 1 }}</td>
+        <td class="py-2 px-4">
+          <div [innerHTML]="item.html" class="prose max-w-none"></div>
+        </td>
+        <td class="py-2 px-4 text-sm text-slate-500">
+          {{ item.creado_en | date:'dd/MM/yyyy HH:mm' }}
+        </td>
+      </tr>
+      <tr *ngIf="contenidos.length === 0">
+        <td colspan="3" class="text-center py-4 text-slate-400">No hay contenidos guardados</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Paginación -->
+  <div class="flex justify-center mt-4 gap-2">
+    <button
+      class="px-3 py-1 rounded-md text-sm bg-slate-100 hover:bg-slate-200"
+      [disabled]="paginaActual === 1"
+      (click)="cambiarPagina(paginaActual - 1)"
+    >
+      ◀ Anterior
+    </button>
+
+    <ng-container *ngFor="let p of [].constructor(totalPaginas()); let idx = index">
+      <button
+        class="px-3 py-1 rounded-md text-sm"
+        [ngClass]="{
+          'bg-sky-600 text-white': paginaActual === idx + 1,
+          'bg-slate-100 hover:bg-slate-200': paginaActual !== idx + 1
+        }"
+        (click)="cambiarPagina(idx + 1)"
+      >
+        {{ idx + 1 }}
+      </button>
+    </ng-container>
+
+    <button
+      class="px-3 py-1 rounded-md text-sm bg-slate-100 hover:bg-slate-200"
+      [disabled]="paginaActual === totalPaginas()"
+      (click)="cambiarPagina(paginaActual + 1)"
+    >
+      Siguiente ▶
+    </button>
+  </div>
+</div>

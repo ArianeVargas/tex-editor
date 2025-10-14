@@ -21,7 +21,7 @@ export class EditorComponent implements OnInit {
       [{ list: 'ordered' }, { list: 'bullet' }], // Listas ordenadas y no ordenadas
     ]
   };
-
+  formats = ['bold', 'italic', 'list', 'bullet', 'link'];
   constructor(private contenidoService: ContenidoService) {}
 
   ngOnInit() {
@@ -41,6 +41,7 @@ export class EditorComponent implements OnInit {
     this.contenidoService.guardarContenido({ html: this.contenidoHtml }).subscribe({
       next: () => {        
         alert('✅ Contenido guardado en la base de datos');
+        console.log('Contenido guardado:', this.contenidoHtml);
         this.contenidoService.notificarCambio();
       },
     

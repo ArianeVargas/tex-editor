@@ -26,7 +26,13 @@ export class EditorComponent implements OnInit {
 
   ngOnInit() {
     this.contenidoService.obtenerContenido().subscribe({
-      next: (data: any) => this.contenidoHtml = data.html || '',
+      next: (data: any[]) => {
+        if (Array.isArray(data) && data.length > 0) {
+          this.contenidoHtml = data[0].html;
+        } else {
+          this.contenidoHtml = '';
+        }
+      },
       error: (err) => console.error('Error al cargar contenido:', err),
     });
   }
@@ -39,12 +45,12 @@ export class EditorComponent implements OnInit {
     }
 
     this.contenidoService.guardarContenido({ html: this.contenidoHtml }).subscribe({
-      next: () => {        
+      next: () => {
         alert('✅ Contenido guardado en la base de datos');
         console.log('Contenido guardado:', this.contenidoHtml);
         this.contenidoService.notificarCambio();
       },
-    
+
       error: (err) => console.error('❌ Error al guardar contenido:', err),
     });
   }
